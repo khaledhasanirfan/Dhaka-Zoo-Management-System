@@ -13,7 +13,7 @@ import enquiryRoutes from "./routes/enquiry.js";
 
 const app = express();
 const port = Number(process.env.PORT || 5000);
-const allowedOrigins = (process.env.CLIENT_URL || "http://localhost:5173")
+const allowedOrigins = (process.env.CLIENT_URL || "https://localhost:5173")
   .split(",")
   .map((origin) => origin.trim())
   .filter(Boolean);
@@ -26,7 +26,7 @@ app.use(
 );
 app.use(cors({
   origin: [
-    'http://localhost:5173',                    // local dev
+    'https://localhost:5173',                    // local dev
     'https://zoo-management.vercel.app'         // production
   ],
   credentials: true
@@ -76,5 +76,5 @@ app.use((error, _req, res, _next) => {
 });
 
 app.listen(port, () => {
-  console.log(`Dhaka Zoo API listening on http://localhost:${port}`);
+  console.log(`Dhaka Zoo API listening on https://localhost:${port}`);
 });

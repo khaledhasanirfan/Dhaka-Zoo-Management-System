@@ -113,7 +113,7 @@ Example `server/.env`:
 DATABASE_URL=postgresql://postgres:YOUR_PASSWORD@localhost:5432/dhaka_zoo
 JWT_SECRET=dhaka-zoo-local-secret-12345
 PORT=5000
-CLIENT_URL=http://localhost:5173
+CLIENT_URL=https://localhost:5173
 CLAUDE_API_KEY=
 ```
 
@@ -137,7 +137,7 @@ If you are using a disposable local database and do not need migration history, 
 The backend runs at:
 
 ```text
-http://localhost:5000
+https://localhost:5000
 ```
 
 ### 5. Run Frontend
@@ -153,10 +153,10 @@ npm run dev
 The frontend runs at:
 
 ```text
-http://localhost:5173
+https://localhost:5173
 ```
 
-The frontend expects the API at `http://localhost:5000/api` by default. You can override it with `VITE_API_URL`.
+The frontend expects the API at `https://localhost:5000/api` by default. You can override it with `VITE_API_URL`.
 
 ### 6. Demo Login
 
