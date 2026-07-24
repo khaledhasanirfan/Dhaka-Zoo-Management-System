@@ -300,7 +300,7 @@ Add screenshots here after running the frontend locally:
 ## Deploy 
 - Database deployed on Neon : https://console.neon.tech/app/projects/rough-snow-92688393
 - Backend deployed on Render : https://dhaka-zoo-management-system.onrender.com/
-- Frontend deployed on vercel : https://dhaka-zoo-management-system.vercel.app/
+- Frontend deployed on vercel : https://dhaka-zms-nuraias-projects.vercel.app/
 
 ## Future Work
 
