@@ -1,8 +1,9 @@
 import "dotenv/config";
 import { Pool } from "pg";
 import { PrismaPg } from "@prisma/adapter-pg";
-import { PrismaClient } from "../app/generated/prisma/client.ts";
+import { PrismaClient } from "@prisma/client"; 
 import bcrypt from "bcryptjs";
+import { FoodCategory } from "@prisma/client"
 
 const connectionString = process.env.DATABASE_URL;
 
@@ -363,21 +364,27 @@ async function main() {
   const foodItems = Object.fromEntries(
     await Promise.all(
       [
-        { name: "Beef", category: "MEAT", unit: "kg" },
-        { name: "Chicken", category: "MEAT", unit: "kg" },
-        { name: "River Fish", category: "FISH", unit: "kg" },
-        { name: "Hay", category: "HAY", unit: "kg" },
-        { name: "Bamboo", category: "PRODUCE", unit: "bundle" },
-        { name: "Bananas", category: "PRODUCE", unit: "kg" },
-        { name: "Mixed Fruit", category: "PRODUCE", unit: "kg" },
-        { name: "Leafy Greens", category: "PRODUCE", unit: "kg" },
-        { name: "Grain Pellets", category: "GRAIN", unit: "kg" },
-        { name: "Insects", category: "OTHER", unit: "cup" },
-        { name: "Seeds", category: "GRAIN", unit: "kg" },
-        { name: "Vitamin Mix", category: "SUPPLEMENT", unit: "scoop" },
-      ].map((data) => prisma.foodItem.create({ data })),
+        { name: "Beef",          category: FoodCategory.MEAT,       unit: "kg"     },
+        { name: "Chicken",       category: FoodCategory.MEAT,       unit: "kg"     },
+        { name: "River Fish",    category: FoodCategory.FISH,       unit: "kg"     },
+        { name: "Hay",           category: FoodCategory.HAY,        unit: "kg"     },
+        { name: "Bamboo",        category: FoodCategory.PRODUCE,    unit: "bundle" },
+        { name: "Bananas",       category: FoodCategory.PRODUCE,    unit: "kg"     },
+        { name: "Mixed Fruit",   category: FoodCategory.PRODUCE,    unit: "kg"     },
+        { name: "Leafy Greens",  category: FoodCategory.PRODUCE,    unit: "kg"     },
+        { name: "Grain Pellets", category: FoodCategory.GRAIN,      unit: "kg"     },
+        { name: "Insects",       category: FoodCategory.OTHER,      unit: "cup"    },
+        { name: "Seeds",         category: FoodCategory.GRAIN,      unit: "kg"     },
+        { name: "Vitamin Mix",   category: FoodCategory.SUPPLEMENT, unit: "scoop"  },
+      ].map((data) =>
+        prisma.foodItem.upsert({
+          where: { name: data.name },
+          update: {},
+          create: data,
+        })
+      ),
     ).then((rows) => rows.map((food) => [food.name, food])),
-  );
+  )
 
   const suppliers = await Promise.all([
     prisma.foodSupplier.create({

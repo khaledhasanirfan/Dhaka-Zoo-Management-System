@@ -137,7 +137,7 @@ If you are using a disposable local database and do not need migration history, 
 The backend runs at:
 
 ```text
-https://localhost:5000
+http://localhost:5000
 ```
 
 ### 5. Run Frontend
@@ -156,7 +156,7 @@ The frontend runs at:
 https://localhost:5173
 ```
 
-The frontend expects the API at `https://localhost:5000/api` by default. You can override it with `VITE_API_URL`.
+The frontend expects the API at `http://localhost:5000/api` by default. You can override it with `VITE_API_URL`.
 
 ### 6. Demo Login
 
