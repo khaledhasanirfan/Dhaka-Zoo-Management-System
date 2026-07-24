@@ -6,7 +6,7 @@ export function validateBody(schema) {
       return next(Object.assign(new Error("Validation failed."), { status: 400, details: parsed.error.flatten() }));
     }
 
-    req.body = parsed.data;
+    req.body = parsed.data; 
     return next();
   };
 }
@@ -19,7 +19,7 @@ export function validateQuery(schema) {
       return next(Object.assign(new Error("Validation failed."), { status: 400, details: parsed.error.flatten() }));
     }
 
-    req.query = parsed.data;
+    req.validatedQuery = parsed.data;  
     return next();
   };
 }

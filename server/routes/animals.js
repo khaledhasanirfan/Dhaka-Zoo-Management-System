@@ -28,7 +28,7 @@ const animalBodySchema = z.object({
 const updateAnimalSchema = animalBodySchema.partial();
 
 router.get("/", validateQuery(animalQuerySchema), asyncHandler(async (req, res) => {
-  const animals = await AnimalService.getAll(req.query);
+  const animals = await AnimalService.getAll(req.validatedQuery);
   res.json({ animals });
 }));
 
