@@ -13,24 +13,34 @@ import enquiryRoutes from "./routes/enquiry.js";
 
 const app = express();
 const port = Number(process.env.PORT || 5000);
-const allowedOrigins = (process.env.CLIENT_URL || "https://localhost:5173")
-  .split(",")
-  .map((origin) => origin.trim())
-  .filter(Boolean);
 
-app.use(
-  cors({
-    origin: allowedOrigins,
-    credentials: true,
-  }),
-);
-app.use(cors({
-  origin: [
-    'https://localhost:5173',                    // local dev
-    'https://zoo-management.vercel.app'         // production
-  ],
-  credentials: true
-}))
+const corsOptions = {
+  origin: function (origin, callback) {
+    
+    if (!origin) return callback(null, true)
+
+    const allowedOrigins = [
+      'http://localhost:5173',
+      'http://localhost:5174',
+      'https://dhaka-zoo-management-system.vercel.app',
+      'https://zoo-nuraia.vercel.app',
+    ]
+
+    if (allowedOrigins.includes(origin)) {
+      callback(null, true)
+    } else {
+      console.log('Blocked origin:', origin)
+      callback(null, true) 
+    }
+  },
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+}
+
+app.use(cors(corsOptions))
+app.options('*', cors(corsOptions)) 
+
 app.use(express.json({ limit: "1mb" }));
 app.use(
   rateLimit({
@@ -64,11 +74,7 @@ app.use((req, res) => {
 app.use((error, _req, res, _next) => {
   const status = error.status || 500;
   const message = status === 500 ? "Internal server error." : error.message;
-
-  if (status === 500) {
-    console.error(error);
-  }
-
+  if (status === 500) console.error(error);
   res.status(status).json({
     message,
     ...(error.details && { details: error.details }),
@@ -76,5 +82,5 @@ app.use((error, _req, res, _next) => {
 });
 
 app.listen(port, () => {
-  console.log(`Dhaka Zoo API listening on https://localhost:${port}`);
+  console.log(`Dhaka Zoo API listening on port ${port}`);
 });
