@@ -1,4 +1,4 @@
-import prisma from "../lib/prisma.ts";
+import prisma from "../lib/prisma.js";
 import { httpError } from "../utils/httpError.js";
 import { normalizeEnum } from "../utils/formatters.js";
 

@@ -8,9 +8,9 @@ Frontend (Vercel):
 
 https://dhaka-zoo-visitor-portal.vercel.app/
 
-Backend health check (Render):
+Backend health check (Vercel):
 
-https://dhaka-zoo-management-system.onrender.com/api/health
+https://server-kappa-three-27.vercel.app/api/health
 
 The production database is PostgreSQL on Neon. GitHub Pages is not used.
 
@@ -193,21 +193,20 @@ Output Directory: dist
 Set the production environment variable:
 
 ```env
-VITE_API_URL=https://dhaka-zoo-management-system.onrender.com/api
+VITE_API_URL=https://server-kappa-three-27.vercel.app/api
 ```
 
 `client/vercel.json` provides React Router fallback routing and production security headers. Do not commit `.env` or `.env.production`; Vercel owns production environment configuration.
 
 ### Backend Deployment
 
-Deploy the `server` folder to a Node.js host such as Render or Railway.
+Deploy the `server` folder as a separate Vercel project using the same GitHub repository.
 
 Recommended backend settings:
 
 ```text
 Root Directory: server
-Build Command: npm install && npm run prisma:generate && npx prisma migrate deploy
-Start Command: npm start
+Build Command: npm run prisma:generate
 ```
 
 Backend environment variables:
@@ -219,7 +218,7 @@ PORT=5000
 CLIENT_URL=https://dhaka-zoo-visitor-portal.vercel.app
 ```
 
-Run the seed command once on the hosted backend/database:
+Use the Neon production connection string for `DATABASE_URL`, then run the migration and seed commands from a trusted local terminal:
 
 ```bash
 npm run seed

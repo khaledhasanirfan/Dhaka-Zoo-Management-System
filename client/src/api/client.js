@@ -1,4 +1,4 @@
-const DEFAULT_PRODUCTION_API_URL = 'https://dhaka-zoo-management-system.onrender.com/api'
+const DEFAULT_PRODUCTION_API_URL = 'https://server-kappa-three-27.vercel.app/api'
 const DEFAULT_DEVELOPMENT_API_URL = 'http://localhost:5000/api'
 const configuredApiUrl = import.meta.env.VITE_API_URL?.trim()
 const API_URL = (configuredApiUrl || (import.meta.env.PROD

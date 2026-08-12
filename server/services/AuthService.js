@@ -1,6 +1,6 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import prisma from "../lib/prisma.ts";
+import prisma from "../lib/prisma.js";
 import { httpError } from "../utils/httpError.js";
 import { toPublicUser } from "../utils/formatters.js";
 
