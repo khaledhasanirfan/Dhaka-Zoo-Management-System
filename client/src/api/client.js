@@ -1,5 +1,14 @@
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api'
+const DEFAULT_PRODUCTION_API_URL = 'https://dhaka-zoo-management-system.onrender.com/api'
+const DEFAULT_DEVELOPMENT_API_URL = 'http://localhost:5000/api'
+const configuredApiUrl = import.meta.env.VITE_API_URL?.trim()
+const API_URL = (configuredApiUrl || (import.meta.env.PROD
+  ? DEFAULT_PRODUCTION_API_URL
+  : DEFAULT_DEVELOPMENT_API_URL)).replace(/\/$/, '')
 const TOKEN_KEY = 'dhaka_zoo_token'
+
+if (import.meta.env.PROD && !API_URL.startsWith('https://')) {
+  throw new Error('VITE_API_URL must use HTTPS in production.')
+}
 
 export function getStoredToken() {
   return localStorage.getItem(TOKEN_KEY)

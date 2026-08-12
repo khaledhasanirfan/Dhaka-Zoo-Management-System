@@ -40,21 +40,29 @@ function AuthForm({ mode }) {
         <>
           <label>
             Name
-            <input name="name" value={form.name} onChange={updateField} required minLength={2} />
+            <input name="name" autoComplete="name" value={form.name} onChange={updateField} required minLength={2} />
           </label>
           <label>
             Phone
-            <input name="phone" value={form.phone} onChange={updateField} />
+            <input name="phone" type="tel" autoComplete="tel" value={form.phone} onChange={updateField} />
           </label>
         </>
       )}
       <label>
         Email
-        <input name="email" type="email" value={form.email} onChange={updateField} required />
+        <input name="email" type="email" autoComplete="email" value={form.email} onChange={updateField} required />
       </label>
       <label>
         Password
-        <input name="password" type="password" value={form.password} onChange={updateField} required minLength={8} />
+        <input
+          name="password"
+          type="password"
+          autoComplete={isRegister ? 'new-password' : 'current-password'}
+          value={form.password}
+          onChange={updateField}
+          required
+          minLength={8}
+        />
       </label>
       {error && <p className="form-error">{error}</p>}
       <button className="primary-button" type="submit" disabled={submitting}>
