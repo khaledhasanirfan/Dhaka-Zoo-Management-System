@@ -6,7 +6,7 @@ Dhaka Zoo Management System is a full-stack database project for a Mirpur/Dhaka 
 
 Frontend (Vercel):
 
-https://dhaka-zoo-management-system.vercel.app/
+https://dhaka-zoo-visitor-portal.vercel.app/
 
 Backend health check (Render):
 
@@ -216,7 +216,7 @@ Backend environment variables:
 DATABASE_URL=your_hosted_postgresql_connection_string
 JWT_SECRET=your_secure_secret
 PORT=5000
-CLIENT_URL=https://dhaka-zoo-management-system.vercel.app
+CLIENT_URL=https://dhaka-zoo-visitor-portal.vercel.app
 ```
 
 Run the seed command once on the hosted backend/database:

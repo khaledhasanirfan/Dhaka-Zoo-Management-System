@@ -18,6 +18,7 @@ const port = Number(process.env.PORT || 5000);
 const defaultAllowedOrigins = [
   "http://localhost:5173",
   "http://localhost:5174",
+  "https://dhaka-zoo-visitor-portal.vercel.app",
   "https://dhaka-zoo-management-system.vercel.app",
   "https://dhaka-zms-nuraias-projects.vercel.app",
 ];

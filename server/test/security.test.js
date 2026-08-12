@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { after, before, test } from "node:test";
 
-const trustedOrigin = "https://dhaka-zoo-management-system.vercel.app";
+const trustedOrigin = "https://dhaka-zoo-visitor-portal.vercel.app";
 let baseUrl;
 let server;
 
