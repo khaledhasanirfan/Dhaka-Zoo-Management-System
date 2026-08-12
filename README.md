@@ -2,6 +2,8 @@
 
 Dhaka Zoo Management System is a full-stack database project for a Mirpur/Dhaka Zoo style visitor experience. It combines a public-facing React website with an Express API, JWT auth, Prisma ORM, PostgreSQL, normalized zoo operations data, and seed data large enough to demonstrate meaningful relational queries.
 
+For a full plain-language architecture, frontend/backend request flows, database diagram, deployment guide, and honest feature-completion checklist, read [PROJECT_GUIDE.md](PROJECT_GUIDE.md).
+
 ## Live Website
 
 Frontend (Vercel):
