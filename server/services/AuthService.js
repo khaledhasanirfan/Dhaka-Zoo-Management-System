@@ -5,6 +5,7 @@ import { httpError } from "../utils/httpError.js";
 import { toPublicUser } from "../utils/formatters.js";
 
 const TOKEN_EXPIRES_IN = "7d";
+const DEMO_EMAIL_SUFFIX = "@dhakazoo.local";
 
 function getJwtSecret() {
   const secret = process.env.JWT_SECRET;
@@ -45,7 +46,10 @@ export const AuthService = {
   async login({ email, password }) {
     const user = await prisma.user.findUnique({ where: { email: email.toLowerCase() } });
 
-    if (!user || !(await bcrypt.compare(password, user.passwordHash))) {
+    const demoAccountBlocked =
+      process.env.NODE_ENV === "production" && user?.email.endsWith(DEMO_EMAIL_SUFFIX);
+
+    if (demoAccountBlocked || !user || !(await bcrypt.compare(password, user.passwordHash))) {
       throw httpError(401, "Invalid email or password.");
     }
 

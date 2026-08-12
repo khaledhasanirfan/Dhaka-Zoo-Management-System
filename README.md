@@ -4,11 +4,15 @@ Dhaka Zoo Management System is a full-stack database project for a Mirpur/Dhaka 
 
 ## Live Website
 
-Frontend GitHub Pages link:
+Frontend (Vercel):
 
-https://nuraia.github.io/Dhaka-Zoo-Management-System/
+https://dhaka-zoo-management-system.vercel.app/
 
-Note: GitHub Pages hosts only the React frontend. Login, ticket booking, seed data, and database-backed animal data require the Express backend and PostgreSQL database to be running locally or deployed to a backend host such as Render, Railway, or Vercel Serverless with a hosted PostgreSQL database.
+Backend health check (Render):
+
+https://dhaka-zoo-management-system.onrender.com/api/health
+
+The production database is PostgreSQL on Neon. GitHub Pages is not used.
 
 ## Tech Stack
 
@@ -113,13 +117,10 @@ Example `server/.env`:
 DATABASE_URL=postgresql://postgres:YOUR_PASSWORD@localhost:5432/dhaka_zoo
 JWT_SECRET=dhaka-zoo-local-secret-12345
 PORT=5000
-CLIENT_URL=https://localhost:5173
-CLAUDE_API_KEY=
+CLIENT_URL=http://localhost:5173
 ```
 
 Replace `YOUR_PASSWORD` with the PostgreSQL password you set during installation.
-
-`CLAUDE_API_KEY` is reserved for future ZooBot work and is not used by the current backend.
 
 ### 4. Run Backend
 
@@ -153,14 +154,14 @@ npm run dev
 The frontend runs at:
 
 ```text
-https://localhost:5173
+http://localhost:5173
 ```
 
 The frontend expects the API at `http://localhost:5000/api` by default. You can override it with `VITE_API_URL`.
 
 ### 6. Demo Login
 
-After running `npm run seed`, use:
+After running `npm run seed`, use these accounts locally:
 
 ```text
 Visitor:
@@ -174,34 +175,28 @@ admin@dhakazoo.local
 Admin12345
 ```
 
+Demo accounts are rejected when `NODE_ENV=production`. Create a real visitor account on the deployed app instead.
+
 ## Deployment Notes
 
-### GitHub Pages Frontend
+### Vercel Frontend
 
-This repository includes a GitHub Actions workflow for GitHub Pages. To enable it:
-
-1. Open the GitHub repository.
-2. Go to `Settings > Pages`.
-3. Set source to `GitHub Actions`.
-4. Push to `main`.
-
-The live frontend URL is:
+Import the repository in Vercel and configure:
 
 ```text
-https://nuraia.github.io/Dhaka-Zoo-Management-System/
+Root Directory: client
+Framework Preset: Vite
+Build Command: npm run build
+Output Directory: dist
 ```
 
-For login and tickets to work on the live frontend, deploy the backend separately and add this GitHub Actions variable:
+Set the production environment variable:
 
-```text
-VITE_API_URL=https://YOUR_BACKEND_URL/api
+```env
+VITE_API_URL=https://dhaka-zoo-management-system.onrender.com/api
 ```
 
-Add it from:
-
-```text
-Settings > Secrets and variables > Actions > Variables
-```
+`client/vercel.json` provides React Router fallback routing and production security headers. Do not commit `.env` or `.env.production`; Vercel owns production environment configuration.
 
 ### Backend Deployment
 
@@ -221,8 +216,7 @@ Backend environment variables:
 DATABASE_URL=your_hosted_postgresql_connection_string
 JWT_SECRET=your_secure_secret
 PORT=5000
-CLIENT_URL=https://nuraia.github.io
-CLAUDE_API_KEY=
+CLIENT_URL=https://dhaka-zoo-management-system.vercel.app
 ```
 
 Run the seed command once on the hosted backend/database:
@@ -244,12 +238,12 @@ The seed script creates:
 - One seeded admin account
 - One demo visitor account with a sample ticket and day plan
 
-Demo credentials for local development:
+Demo credentials for local development only:
 
 - Admin: `admin@dhakazoo.local` / `Admin12345`
 - Visitor: `visitor@dhakazoo.local` / `Visitor12345`
 
-These credentials are for local demos only.
+These credentials are blocked in production.
 
 ## API Routes
 
@@ -297,10 +291,13 @@ Add screenshots here after running the frontend locally:
 - Ticket booking
 - Auth pages
 
-## Deploy 
-- Database deployed on Neon : https://console.neon.tech/app/projects/rough-snow-92688393
-- Backend deployed on Render : https://dhaka-zoo-management-system.onrender.com/
-- Frontend deployed on vercel : https://dhaka-zms-nuraias-projects.vercel.app/
+## Production Security Notes
+
+- Vercel serves only the static Vite frontend and applies a restrictive Content Security Policy.
+- Render accepts credentialed browser requests only from configured frontend origins.
+- The ticket validation endpoint requires an authenticated admin or staff account.
+- The public repository contains no production database password, JWT secret, or committed frontend environment file.
+- If Google Safe Browsing displays a warning after a clean deployment, verify the site in Google Search Console, review **Security issues**, and request a review. Browser reputation warnings are removed by Google, not by Vercel or application code.
 
 ## Future Work
 

@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { z } from "zod";
-import { requireAuth } from "../middleware/authMiddleware.js";
+import { requireAuth, requireRole } from "../middleware/authMiddleware.js";
 import { TicketService } from "../services/TicketService.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { validateBody } from "../utils/validate.js";
@@ -37,9 +37,15 @@ router.get("/:id", requireAuth, asyncHandler(async (req, res) => {
   res.json({ ticket });
 }));
 
-router.post("/validate", validateBody(validateSchema), asyncHandler(async (req, res) => {
-  const result = await TicketService.validate(req.body);
-  res.json(result);
-}));
+router.post(
+  "/validate",
+  requireAuth,
+  requireRole("ADMIN", "STAFF"),
+  validateBody(validateSchema),
+  asyncHandler(async (req, res) => {
+    const result = await TicketService.validate(req.body);
+    res.json(result);
+  }),
+);
 
 export default router;
